@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 import { useSelector, useDispatch } from "react-redux";
-import { incNum, decNum, reduxData, reduxDataAdd } from '../Services/Actions';
+import { incNum, decNum, reduxData, reduxDataAdd, reduxDatahange } from '../../Services/Actions';
 
 const FormSection = () => {
 
@@ -10,6 +10,10 @@ const FormSection = () => {
     // const x = useSelector((state)=>{
     //     return state.changeNumber
     // })
+
+    const testState = useSelector((state: any) => {
+        return state.changeNumber
+    });
 
     const dispatch = useDispatch();
 
@@ -58,8 +62,11 @@ const FormSection = () => {
             if (res.status == 200) {
 
                 // dispatch(reduxDataAdd(res.data))
+                dispatch(reduxDatahange([res.data]))
 
-                getPeopleData()
+                // console.log(testState);
+
+                // getPeopleData()
                 
                 setInput({
                     name: "",
@@ -75,10 +82,10 @@ const FormSection = () => {
         }
     }
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        getPeopleData()
-    }, []);
+    //     getPeopleData()
+    // }, []);
     
     const getPeopleData = async () => {
         // console.log("Hello");

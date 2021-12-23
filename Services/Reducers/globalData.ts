@@ -10,10 +10,13 @@ const GlobalData = (state = initialState, action: { type: string; param: any })=
         return state = action.param;
     }
     else if (action.type === "userDataAdd") {
-        // console.log(action.param);
+        console.log(action.param, "parm");
+        // console.log(state, "Array");
         
         // return state.shift(action.param);
-        return {...state, fetchedSpendings: state.fetchedSpendings.shift(action.param)}
+        // return {...state, fetchedSpendings: state.fetchedSpendings.shift(action.param)}
+
+        return initialState.fetchedSpendings
 
     }
     else{

@@ -1,17 +1,25 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { reduxData } from '../Services/Actions';
+import { reduxDatahange, reduxDatUpdate, reduxDatDelete } from '../../Services/Actions';
 import { useSelector, useDispatch } from "react-redux";
 
 const CardSection = () => {
-
+    
     const dispatch = useDispatch();
+
+    const testState = useSelector((state: any) => {
+        return state.changeNumber
+    });
+
+    console.log(testState, "cardSectiion");
+    
+
 
     const myState = useSelector((state: any) => {
         return state.GlobalData
     });
 
-    //   console.log(myState);
+      console.log(myState, "From ");
 
 
     const [getPeople, setPeople] = useState({
@@ -32,14 +40,14 @@ const CardSection = () => {
 
 
 
-    const deleteItem = async (item: any) => {
-
+    const deleteItem = async (item: any, index: any) => {
         if (item.id) {
             const res = await axios.post("http://localhost:3333/deletePeople", { id: item.id })
             // console.log(res.status);
 
             if (res.status == 200) {
-                getPeopleData();
+                dispatch(reduxDatDelete(index))
+                // getPeopleData();
             }
         }
     }
@@ -60,12 +68,15 @@ const CardSection = () => {
         }
     }
 
-    const handleClickUpdate = async () => {
+    const handleClickUpdate = async (index: any) => {
+        console.log(index);
+        
         if (edit.name && edit.email && edit.title && edit.image) {
 
             const res = await axios.post("http://localhost:3333/editPeople", { ...edit })
             if (res.status == 200) {
-                getPeopleData();
+                dispatch(reduxDatUpdate({index: index, data: res.data}))
+                // getPeopleData();
 
                 // updatePeopleData( res.data )
                 setInput({
@@ -89,7 +100,7 @@ const CardSection = () => {
         // console.log("Hello");
         const res = await axios.get("http://localhost:3333/getPeoples")
 
-        dispatch(reduxData(res.data))
+        dispatch(reduxDatahange(res.data))
 
         // console.log(res.data);
 
@@ -120,7 +131,7 @@ const CardSection = () => {
 
     }
 
-    const showPeople = myState.map((item: any, index: React.Key | null | undefined) => {
+    const showPeople = testState.array.map((item: any, index: React.Key | null | undefined) => {
 
         return (
 
@@ -132,7 +143,7 @@ const CardSection = () => {
                     <div className="_react_card_content_inner">
 
                         <p>
-                            <span className="cross_icon" onClick={(() => deleteItem(item))}   >X &nbsp; </span>
+                            <span className="cross_icon" onClick={(() => deleteItem(item, index))}   >X &nbsp; </span>
                             <span onClick={((e) => editItem(item, index))}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M41.4853 13.4853L34.4142 6.41421C33.6332 5.63317 32.3668 5.63316 31.5858 6.41421L14.6153 23.3848L24.5147 33.2842L41.4853 16.3137C42.2663 15.5327 42.2663 14.2663 41.4853 13.4853ZM21.7995 34.8116L13.0879 26.1L9.66548 38.234L21.7995 34.8116Z" fill="black" />
@@ -164,7 +175,7 @@ const CardSection = () => {
                                     <input type="file" onChange={handleImageChange} />
                                 </div>
                                 <div className="col-3 mx-auto">
-                                    <button type="submit" className="btn btn-primary d-block w-100 py-2" onClick={handleClickUpdate}>Update</button>
+                                    <button type="submit" className="btn btn-primary d-block w-100 py-2" onClick={()=>handleClickUpdate(index)}>Update</button>
                                 </div>
                             </div>
 
@@ -207,8 +218,6 @@ const CardSection = () => {
         </>
     )
 }
-
-
 
 export default CardSection
 

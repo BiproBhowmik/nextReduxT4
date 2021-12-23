@@ -29,3 +29,21 @@ export const reduxDataAdd = (obj: any)=>{
         param: obj
     }
 }
+export const reduxDatahange = (obj: any)=>{
+    return {
+        type: "reduxDatahange",
+        param: obj
+    }
+}
+export const reduxDatDelete = (index: any)=>{
+    return {
+        type: "reduxDatDelete",
+        param: index
+    }
+}
+export const reduxDatUpdate = (obj: any)=>{
+    return {
+        type: "reduxDatUpdate",
+        param: obj
+    }
+}
