@@ -37,9 +37,6 @@ const CardSection = () => {
     })
 
 
-
-
-
     const deleteItem = async (item: any, index: any) => {
         if (item.id) {
             const res = await axios.post("http://localhost:3333/deletePeople", { id: item.id })
@@ -184,7 +181,8 @@ const CardSection = () => {
                             <div className="_react_card_txt">
                                 <h3 className="_react_card_name">{item.name}</h3>
                                 <p className="_react_card_email">{item.email}</p>
-                                <h4 className="_react_card_title">{item.title}</h4>
+                                {/* <h4 className="_react_card_title">{item.title}</h4> */}
+                                <h4 className="_react_card_title"><div dangerouslySetInnerHTML={{ __html: item.title }} /></h4>
                             </div>
 
                         }
@@ -195,9 +193,15 @@ const CardSection = () => {
         )
     })
 
+    const htmlString = '<h1>Hello World! 👋</h1>';
 
     return (
         <>
+        <h1>
+            Hello
+            <a href=''>#Link</a>
+            <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+        </h1>
             <div className="_react_card_wrapper">
                 <div className="_react_card_wrap">
                     <div className="container">

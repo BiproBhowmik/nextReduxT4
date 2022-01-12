@@ -3,11 +3,14 @@ import changeNumber from './reduxData'
 import GlobalData from './globalData';
 
 import { combineReducers } from 'redux'
+import TestData from './testReducer';
 
 const rootReducer = combineReducers ({
     changeNumber,
     // changeString
-    GlobalData
+    GlobalData,
+
+    testD: TestData
 });
 
 export default rootReducer
